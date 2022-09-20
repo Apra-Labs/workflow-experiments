@@ -25,14 +25,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: check out
-        uses: actions/checkout@v3
-
-      - name: experiment
-        uses: Vampire/setup-wsl@v1
-        - run: |
-          echo $PATH
-          ls -al
-          whoami
-          
+      -uses: Vampire/setup-wsl@v1
+    - name: experiment
+      run: |
+        echo $PATH
+        ls -al
+        whoami
