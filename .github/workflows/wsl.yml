@@ -29,3 +29,4 @@ jobs:
           ls -al
           whoami
           uname -a
+          pwd
