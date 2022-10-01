@@ -26,6 +26,7 @@ jobs:
         shell: wsl-bash {0}
         run: |
           echo $PATH
+          LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/foo; echo $LD_LIBRARY_PATH
           ls -al
           whoami
           uname -a
