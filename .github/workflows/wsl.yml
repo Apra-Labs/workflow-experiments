@@ -17,13 +17,15 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
+    defaults:
+      run:
+        shell: wsl-bash {0}    
     runs-on: windows-cuda
     steps:
       - uses: Vampire/setup-wsl@v1
         with:
           distribution: Ubuntu-20.04
       - name: experiment
-        shell: wsl-bash {0}
         run: |
           echo $PATH
           LD_LIBRARY_PATH=/foo:${LD_LIBRARY_PATH-}; echo $LD_LIBRARY_PATH
@@ -31,3 +33,10 @@ jobs:
           whoami
           uname -a
           pwd
+      - name: install ssh server
+        run: |
+          sudo apt-get -y install openssh-server
+          sudo sed -i -E 's,^#?Port.*$,Port 2022,' /etc/ssh/sshd_config
+          sudo service ssh restart
+          sudo sh -c "echo '${USER} ALL=(root) NOPASSWD: /usr/sbin/service ssh start' >/etc/sudoers.d/service-ssh-start"
+          sudo /usr/sbin/service ssh start
