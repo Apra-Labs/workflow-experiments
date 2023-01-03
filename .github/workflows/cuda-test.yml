@@ -19,13 +19,11 @@ jobs:
   build:
     runs-on: windows-cuda
     steps:
-    - name: Check builder for CUDA
+    - name: Set the value
+      id: step_one
       run: |
-        # (nvcc --version) || echo 'please install cuda'
-        # Get-Item 'c:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7\include\cudnn.h' || echo 'install cudnn as described in the readme.md'
-        echo "CUDA_HOME=c:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7" >> $GITHUB_ENV
-        echo "CUDA_PATH=c:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7\bin" >> $GITHUB_ENV
-    - name: Check environment
+        echo "action_state=yellow" >> $GITHUB_ENV
+    - name: Use the value
+      id: step_two
       run: |
-        echo CUDA_HOME=${{env.CUDA_HOME}}
-        echo CUDA_PATH=${{env.CUDA_PATH}}
+        echo "${{ env.action_state }}" # This will output 'yellow'
